@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.Windows.Forms;
 
 
@@ -13,34 +8,71 @@ namespace Youtube0._2
 {
     public partial class Youtube : Form
     {
-        bool flag = true;
-        string lang  = "rus";
-        string aboutrus = "Программа разработана программистом Temnij_Chudak \n Версия 0.0.2";
-        string abouteng = "This programmm developed by Temnij_Chudak \n Version 0.0.2";
-
+        private readonly bool flag = true;
+        private string lang = "rus";
+        private readonly string aboutrus = "Программа разработана программистом Temnij_Chudak \n Версия 0.0.4";
+        private readonly string abouteng = "This programmm developed by Temnij_Chudak \n Version 0.0.4";
+        private ChromiumWebBrowser chrome;
 
 
         public Youtube()
         {
             InitializeComponent();
 
-            webBrowser1.Navigate("youtube.com");
+
 
         }
+        private void Youtube_Load(object sender, EventArgs e)
+        {
+            CefSettings settings = new CefSettings();
+            Cef.Initialize(settings);
+            chrome = new ChromiumWebBrowser("http://youtube.com");
+            pContainer.Controls.Add(chrome);
+            chrome.Dock = DockStyle.Fill;
+        }
 
-   
+        private bool isDragging = false;
+        private int currentX, currentY;
 
-        
+        private void gunaPanel1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                currentX = e.X;
+                currentY = e.Y;
+            }
+        }
+        private void gunaPanel1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Top = Top + (e.Y - currentY);
+                Left = Left + (e.X - currentX);
+            }
+        }
+        private void gunaPanel1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+
+
+
+
         private void библиоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("https://www.youtube.com/feed/library");
+            chrome.Load("https://www.youtube.com/feed/library");
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             YSettings set = new YSettings(lang);
             set.ShowDialog();
-            this.lang = set.lang;
+            lang = set.lang;
             if (lang.Equals("eng"))
             {
                 главнаяToolStripMenuItem.Text = "Home";
@@ -66,7 +98,7 @@ namespace Youtube0._2
                 aboutToolStripMenuItem.Text = "О мне";
                 settingsToolStripMenuItem.Text = "Настройки";
             }
-                
+
 
         }
 
@@ -74,37 +106,39 @@ namespace Youtube0._2
         {
             if (lang.Equals("rus"))
             {
-                MessageBox.Show(aboutrus,"О мне");
+                MessageBox.Show(aboutrus, "О мне");
             }
             else
             {
-                MessageBox.Show(abouteng,"About");
+                MessageBox.Show(abouteng, "About");
             }
         }
 
         private void главнаяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("http://www.youtube.com");
+            chrome.Load("http://www.youtube.com");
         }
 
         private void вТрендеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("https://www.youtube.com/feed/trending");
+            chrome.Load("https://www.youtube.com/feed/trending");
         }
 
         private void подпискиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("https://www.youtube.com/feed/subscriptions");
+            chrome.Load("https://www.youtube.com/feed/subscriptions");
         }
 
         private void историяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("https://www.youtube.com/feed/history");
+            chrome.Load("https://www.youtube.com/feed/history");
         }
 
         private void вашиВидеоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate("https://www.youtube.com/feed/my_videos");
+            chrome.Load("https://www.youtube.com/feed/my_videos");
         }
+
+
     }
 }

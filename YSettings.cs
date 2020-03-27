@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Youtube0._2
@@ -18,7 +10,8 @@ namespace Youtube0._2
         {
             InitializeComponent();
             lang = this.lang;
-            if (this.lang.Equals("rus")){
+            if (this.lang.Equals("rus"))
+            {
                 gunaLabel1.Text = "Язык";
                 YSettings.ActiveForm.Text = "Настройки";
 
@@ -28,11 +21,44 @@ namespace Youtube0._2
                 gunaLabel1.Text = "Language";
                 YSettings.ActiveForm.Text = "Settings";
             }
+
         }
+
+        private bool isDragging = false;
+        private int currentX, currentY;
+
+        private void gunaPanel1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                currentX = e.X;
+                currentY = e.Y;
+            }
+        }
+        private void gunaPanel1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Top = Top + (e.Y - currentY);
+                Left = Left + (e.X - currentX);
+            }
+        }
+        private void gunaPanel1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+
+
 
         private void gunaButton1_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (gunaComboBox1.SelectedItem.Equals("Russian"))
                 {
                     lang = "rus";
@@ -46,10 +72,16 @@ namespace Youtube0._2
                     YSettings.ActiveForm.Text = "Settings";
                 }
             }
-            catch{
+            catch
+            {
                 MessageBox.Show("err");
             }
-            this.Close();
+            Close();
+
+        }
+
+        private void gunaControlBox1_Click(object sender, EventArgs e)
+        {
 
         }
     }
