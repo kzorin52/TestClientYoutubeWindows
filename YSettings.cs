@@ -18,7 +18,7 @@ namespace Youtube0._2
         {
             InitializeComponent();
             lang = this.lang;
-            if (lang.Equals("rus")){
+            if (this.lang.Equals("rus")){
                 gunaLabel1.Text = "Язык";
                 YSettings.ActiveForm.Text = "Настройки";
 

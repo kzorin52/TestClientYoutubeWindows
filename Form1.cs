@@ -8,19 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Youtube0._2
 {
     public partial class Youtube : Form
     {
         bool flag = true;
-        string lang;
+        string lang  = "rus";
+        string aboutrus = "Программа разработана программистом Temnij_Chudak \n Версия 0.0.2";
+        string abouteng = "This programmm developed by Temnij_Chudak \n Version 0.0.2";
 
 
 
         public Youtube()
         {
             InitializeComponent();
-         
+
+            webBrowser1.Navigate("youtube.com");
+
         }
 
    
@@ -28,7 +33,7 @@ namespace Youtube0._2
         
         private void библиоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                this.webBrowser1.Url = new System.Uri("https://www.youtube.com/feed/library", System.UriKind.Absolute);
+            webBrowser1.Navigate("https://www.youtube.com/feed/library");
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +52,7 @@ namespace Youtube0._2
                 menuToolStripMenuItem.Text = "Menu";
                 aboutToolStripMenuItem.Text = "About";
                 settingsToolStripMenuItem.Text = "Settings";
+
             }
             else
             {
@@ -66,32 +72,39 @@ namespace Youtube0._2
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (lang.Equals("rus"))
+            {
+                MessageBox.Show(aboutrus,"О мне");
+            }
+            else
+            {
+                MessageBox.Show(abouteng,"About");
+            }
         }
 
         private void главнаяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.webBrowser1.Url = new System.Uri("http://www.youtube.com", System.UriKind.Absolute);
+            webBrowser1.Navigate("http://www.youtube.com");
         }
 
         private void вТрендеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.webBrowser1.Url = new System.Uri("https://www.youtube.com/feed/trending", System.UriKind.Absolute);
+            webBrowser1.Navigate("https://www.youtube.com/feed/trending");
         }
 
         private void подпискиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.webBrowser1.Url = new System.Uri("https://www.youtube.com/feed/subscriptions", System.UriKind.Absolute);
+            webBrowser1.Navigate("https://www.youtube.com/feed/subscriptions");
         }
 
         private void историяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.webBrowser1.Url = new System.Uri("https://www.youtube.com/feed/history", System.UriKind.Absolute);
+            webBrowser1.Navigate("https://www.youtube.com/feed/history");
         }
 
         private void вашиВидеоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                 this.webBrowser1.Url = new System.Uri("https://www.youtube.com/feed/my_videos", System.UriKind.Absolute);
+            webBrowser1.Navigate("https://www.youtube.com/feed/my_videos");
         }
     }
 }
